@@ -19,3 +19,20 @@
     padding-bottom: 10px;
     height: auto;
 }
+
+.list-block .item-content{
+    border-top: 1px solid #eaeaea;
+}
+
+a.item-content .item-inner {
+    padding-left: 33px;
+}
+.del_btn img {
+    width: 22px;
+}
+.del_btn {
+    position: absolute;
+    margin-top: 12px;
+    margin-left: 10px;
+    z-index: 1;
+}

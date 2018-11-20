@@ -3,7 +3,11 @@ var myApp = new Framework7();
 var storage;
 var tasks = [];
 var tasksStorageKey = "TASKS_LIST";
+var listRef;
 
+function myListItemHTML(index,text) {
+    return '<li><a href="#" class="del_btn"><img src="images/trash_icon.png" /></a> <a href="edit.html?index='+index+'" class="item-content item-link"><div class="item-inner"><div class="item-title">'+text+'</div></div></a></li>';
+}
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
@@ -16,10 +20,19 @@ var mainView = myApp.addView('.view-main', {
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function() {
     storage = window.localStorage;
-    console.log("Device is ready!");
     tasks = getAllTasks();
-    console.log(tasks);
+    listRef = $$("#myTodoList");
+    refreshList();
 });
+
+function refreshList() {
+    var allTasks = getAllTasks();
+    listRef.html('');
+    for (var ti=0;ti<allTasks.length;ti++){
+        var myListItem = myListItemHTML(ti,allTasks[ti]);
+        listRef.append(myListItem)
+    }
+}
 
 function getAllTasks() {
     var storedTasks = storage.getItem(tasksStorageKey);
@@ -36,6 +49,12 @@ function addTask(task){
     storage.setItem(tasksStorageKey,JSON.stringify(allTasks))
 }
 
+function updateTask(index,task){
+    var allTasks = getAllTasks();
+    allTasks[index] = task;
+    storage.setItem(tasksStorageKey,JSON.stringify(allTasks))
+}
+
 myApp.onPageInit('add', function (page) {
     $$("#addBtn").click(function () {
         var addText = $$("#myAddInput").val();
@@ -44,6 +63,8 @@ myApp.onPageInit('add', function (page) {
             return;
         }
         addTask(addText);
+        page.view.back({url:'/'});
+        refreshList()
     })
 });
 
@@ -54,6 +75,23 @@ myApp.onPageInit('add', function (page) {
 myApp.onPageInit('about', function (page) {
     // Do something here for "about" page
     console.log("About page is initialized!")
+});
+
+myApp.onPageInit('edit', function (page) {
+    var itemIndex = page.query.index;
+    var myEditInp = $$("#myEditInput");
+    var tasks = getAllTasks();
+    myEditInp.val(tasks[itemIndex]);
+    $$("#editBtn").click(function () {
+        var myText = myEditInp.val();
+        if(myText.length === 0){
+            myApp.alert("Please enter task text!")
+            return;
+        }
+        updateTask(itemIndex,myText);
+        page.view.back({url:"/"});
+        refreshList()
+    });
 });
 
 // Option 2. Using one 'pageInit' event handler for all pages:
