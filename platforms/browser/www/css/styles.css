@@ -36,3 +36,7 @@ a.item-content .item-inner {
     margin-left: 10px;
     z-index: 1;
 }
+
+.del_btn_edit img {
+    width: 22px;
+}

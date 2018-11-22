@@ -1,0 +1,4 @@
+#Thu Nov 22 10:23:26 PKT 2018
+base.0=/Users/ishaqhassan/Desktop/PhoneGap/TodoAppSessionV1/platforms/android/app/build/intermediates/transforms/dexMerger/debug/0
+renamed.0=classes.dex
+file.0=/Users/ishaqhassan/Desktop/PhoneGap/TodoAppSessionV1/platforms/android/app/build/intermediates/transforms/dexMerger/debug/0/classes.dex

@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/ishaqhassan/Desktop/PhoneGap/TodoAppSessionV1/platforms/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
+            "map": [
+                {
+                    "source": "/Users/ishaqhassan/Desktop/PhoneGap/TodoAppSessionV1/platforms/android/app/src/main/res/values/strings.xml",
+                    "from": {
+                        "startLines": "4,2,3",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "168,55,109",
+                        "endColumns": "63,53,58",
+                        "endOffsets": "227,104,163"
+                    },
+                    "to": {
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,119,173",
+                        "endColumns": "63,53,58",
+                        "endOffsets": "114,168,227"
+                    }
+                }
+            ]
+        }
+    ]
+}

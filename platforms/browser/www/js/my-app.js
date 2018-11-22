@@ -6,7 +6,7 @@ var tasksStorageKey = "TASKS_LIST";
 var listRef;
 
 function myListItemHTML(index,text) {
-    return '<li><a href="#" class="del_btn"><img src="images/trash_icon.png" /></a> <a href="edit.html?index='+index+'" class="item-content item-link"><div class="item-inner"><div class="item-title">'+text+'</div></div></a></li>';
+    return '<li><a href="#" class="del_btn" data-index="'+index+'"><img src="images/trash_icon.png" /></a> <a href="edit.html?index='+index+'" class="item-content item-link"><div class="item-inner"><div class="item-title">'+text+'</div></div></a></li>';
 }
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
@@ -32,6 +32,22 @@ function refreshList() {
         var myListItem = myListItemHTML(ti,allTasks[ti]);
         listRef.append(myListItem)
     }
+    $$(".del_btn").click(function () {
+        var index = $$(this).data("index");
+        deleteTask(index);
+    });
+}
+
+function deleteTask(index,onOk) {
+    var allTasks = getAllTasks();
+    myApp.confirm("Are you sure?","Delete task",function () {
+        allTasks.splice(index,1);
+        storage.setItem(tasksStorageKey,JSON.stringify(allTasks))
+        refreshList();
+        if(onOk){
+            onOk();
+        }
+    });
 }
 
 function getAllTasks() {
@@ -65,7 +81,7 @@ myApp.onPageInit('add', function (page) {
         addTask(addText);
         page.view.back({url:'/'});
         refreshList()
-    })
+    });
 });
 
 
@@ -91,6 +107,11 @@ myApp.onPageInit('edit', function (page) {
         updateTask(itemIndex,myText);
         page.view.back({url:"/"});
         refreshList()
+    });
+    $$(".del_btn_edit").click(function () {
+       deleteTask(itemIndex,function () {
+           page.view.back({url:"/"});
+       });
     });
 });
 
